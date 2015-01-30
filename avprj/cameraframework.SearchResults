@@ -1,0 +1,154 @@
+---- connect Matches (154 in 11 files) ----
+Camera.cpp (d:\source\mysource\android\camera\av\camera):    if (camera->connect(c) == NO_ERROR) {
+Camera.cpp (d:\source\mysource\android\camera\av\camera):    // We don't need to call disconnect() here because if the CameraService
+Camera.cpp (d:\source\mysource\android\camera\av\camera):    // call disconnect() here if we are in the same process as mediaserver,
+Camera.cpp (d:\source\mysource\android\camera\av\camera):    // because we may be invoked by CameraService::Client::connect() and will
+Camera.cpp (d:\source\mysource\android\camera\av\camera):sp<Camera> Camera::connect(int cameraId, const String16& clientPackageName,
+Camera.cpp (d:\source\mysource\android\camera\av\camera):    return CameraBaseT::connect(cameraId, clientPackageName, clientUid);
+Camera.cpp (d:\source\mysource\android\camera\av\camera):status_t Camera::reconnect()
+Camera.cpp (d:\source\mysource\android\camera\av\camera):    ALOGV("reconnect");
+Camera.cpp (d:\source\mysource\android\camera\av\camera):    return c->connect(this);
+Camera.cpp (d:\source\mysource\android\camera\av\camera):    mCamera->reconnect();
+CameraBase.cpp (d:\source\mysource\android\camera\av\camera):sp<TCam> CameraBase<TCam, TCamTraits>::connect(int cameraId,
+CameraBase.cpp (d:\source\mysource\android\camera\av\camera):    ALOGV("%s: connect", __FUNCTION__);
+CameraBase.cpp (d:\source\mysource\android\camera\av\camera):        c->mCamera = cs->connect(cl, cameraId, clientPackageName, clientUid);
+CameraBase.cpp (d:\source\mysource\android\camera\av\camera):void CameraBase<TCam, TCamTraits>::disconnect()
+CameraBase.cpp (d:\source\mysource\android\camera\av\camera):    ALOGV("%s: disconnect", __FUNCTION__);
+CameraBase.cpp (d:\source\mysource\android\camera\av\camera):        mCamera->disconnect();
+CameraBase.cpp (d:\source\mysource\android\camera\av\camera):    ALOGV("%s: disconnect (done)", __FUNCTION__);
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    // client will not be accessed from callback. should unlock to prevent dead-lock in disconnect
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    disconnect();
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        ALOGE("attempt to use a camera after disconnect() (pid %d)", getCallingPid());
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):// connect a new client to the camera
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):status_t CameraClient::connect(const sp<ICameraClient>& client) {
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    LOG1("connect E (pid %d)", callingPid);
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        ALOGW("Tried to connect to a locked camera (old pid %d, new pid %d)",
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        LOG1("Connect to the same client");
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    LOG1("connect X (pid %d)", callingPid);
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):static void disconnectWindow(const sp<ANativeWindow>& window) {
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        status_t result = native_window_api_disconnect(window.get(),
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):            ALOGW("native_window_api_disconnect failed: %s (%d)", strerror(-result),
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):void CameraClient::disconnect() {
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    LOG1("disconnect E (pid %d)", callingPid);
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    // Allow both client and the media server to disconnect at all times
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        ALOGW("different client - don't disconnect");
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    // Make sure disconnect() is done once and once only, whether it is called
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        disconnectWindow(mPreviewWindow);
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    CameraService::Client::disconnect();
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    LOG1("disconnect X (pid %d)", callingPid);
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        result = native_window_api_connect(window.get(), NATIVE_WINDOW_API_CAMERA);
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):            ALOGE("native_window_api_connect failed: %s (%d)", strerror(-result),
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        // Everything has succeeded.  Disconnect the old window and remember the
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        disconnectWindow(mPreviewWindow);
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        // Something went wrong after we connected to the new window, so
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        // disconnect here.
+CameraClient.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        disconnectWindow(window);
+CameraClient.h (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    virtual void            disconnect();
+CameraClient.h (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    virtual status_t        connect(const sp<ICameraClient>& client);
+CameraClient.h (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    sp<CameraHardwareInterface>     mHardware;       // cleared after disconnect()
+CameraDeviceBase.h (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    virtual status_t disconnect() = 0;
+CameraDeviceBase.h (d:\source\mysource\android\camera\av\services\camera\libcameraservice):     * Connect HAL notifications to a listener. Overwrites previous
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):       since it is also called from connect and we could get into a deadlock */
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        Vector<sp<BasicClient> > clientsToDisconnect;
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):           /* Find all clients that we need to disconnect */
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):               clientsToDisconnect.push_back(client);
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):                   clientsToDisconnect.push_back(cl);
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        /* now disconnect them. don't hold the lock
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        for (size_t i = 0; i < clientsToDisconnect.size(); ++i) {
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):            sp<BasicClient> client = clientsToDisconnect[i];
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):            client->disconnect();
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        ALOGV("%s: After unplug, disconnected %d clients",
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):              __FUNCTION__, clientsToDisconnect.size());
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):bool CameraService::validateConnect(int cameraId,
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):            ALOGE("CameraService::connect X (pid %d) rejected (don't trust clientUid)",
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        ALOGE("CameraService::connect X (pid %d) rejected (invalid cameraId %d).",
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        ALOGI("Camera is disabled. connect X (pid %d) rejected", callingPid);
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):               " connect X (pid %d) rejected", callingPid);
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):               " connect X (pid %d) rejected", callingPid);
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    //  -- It's done implicitly in canConnectUnsafe /w the mBusy array
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):bool CameraService::canConnectUnsafe(int cameraId,
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):                LOG1("CameraService::connect X (pid %d) (the same client)",
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):                ALOGW("CameraService::connect X (pid %d) rejected"
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        ALOGW("CameraService::connect X (pid %d, \"%s\") rejected"
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):sp<ICamera> CameraService::connect(
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    LOG1("CameraService::connect E (pid %d \"%s\", id %d)", callingPid,
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    if (!validateConnect(cameraId, /*inout*/clientUid)) {
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        if (!canConnectUnsafe(cameraId, clientPackageName,
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        if (!connectFinishUnsafe(client, client->asBinder())) {
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        LOG1("CameraService::connect X (id %d, this pid is %d)", cameraId,
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):bool CameraService::connectFinishUnsafe(const sp<BasicClient>& client,
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):sp<IProCameraUser> CameraService::connect(
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    LOG1("CameraService::connectPro E (pid %d \"%s\", id %d)", callingPid,
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    if (!validateConnect(cameraId, /*inout*/clientUid)) {
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):            if (!canConnectUnsafe(cameraId, clientPackageName,
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        if (!connectFinishUnsafe(client, client->asBinder())) {
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        LOG1("CameraService::connectPro X (id %d, this pid is %d)", cameraId,
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        // This happens when we have already disconnected (or this is
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        // Client::~Client() -> disconnect() -> removeClientByRemote().
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        case BnCameraService::CONNECT:
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        case BnCameraService::CONNECT_PRO:
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):// The reason we need this busy bit is a new CameraService::connect() request
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):            mSoundPlayer[i]->disconnect();
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    // unconditionally disconnect. function is idempotent
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    Client::disconnect();
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):void CameraService::BasicClient::disconnect() {
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    ALOGV("BasicClient::disconnect");
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        // Reset the client PID to allow server-initiated disconnect,
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        disconnect();
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):void CameraService::Client::disconnect() {
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    ALOGV("Client::disconnect");
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    BasicClient::disconnect();
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    ALOGW("Disconnecting camera client %p since the binder for it "
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    cameraClient->disconnect();
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    //  connect() -> ProClient::disconnect -> updateStatus
+CameraService.cpp (d:\source\mysource\android\camera\av\services\camera\libcameraservice):             * For example if a client disconnects, we want to go to PRESENT
+CameraService.h (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    virtual sp<ICamera> connect(const sp<ICameraClient>& cameraClient, int cameraId,
+CameraService.h (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    virtual sp<IProCameraUser> connect(const sp<IProCameraCallbacks>& cameraCb,
+CameraService.h (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        virtual void          disconnect() = 0;
+CameraService.h (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        virtual void          disconnect();
+CameraService.h (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        virtual status_t      connect(const sp<ICameraClient>& client) = 0;
+CameraService.h (d:\source\mysource\android\camera\av\services\camera\libcameraservice):        virtual status_t      connect(const sp<IProCameraCallbacks>& callbacks)
+CameraService.h (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    // Step 1. Check if we can connect, before we acquire the service lock.
+CameraService.h (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    bool                validateConnect(int cameraId,
+CameraService.h (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    // Step 2. Check if we can connect, after we acquire the service lock.
+CameraService.h (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    bool                canConnectUnsafe(int cameraId,
+CameraService.h (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    // When connection is successful, initialize client and track its death
+CameraService.h (d:\source\mysource\android\camera\av\services\camera\libcameraservice):    bool                connectFinishUnsafe(const sp<BasicClient>& client,
+ICamera.cpp (d:\source\mysource\android\camera\av\camera):    DISCONNECT = IBinder::FIRST_CALL_TRANSACTION,
+ICamera.cpp (d:\source\mysource\android\camera\av\camera):    CONNECT,
+ICamera.cpp (d:\source\mysource\android\camera\av\camera):    // disconnect from camera service
+ICamera.cpp (d:\source\mysource\android\camera\av\camera):    void disconnect()
+ICamera.cpp (d:\source\mysource\android\camera\av\camera):        ALOGV("disconnect");
+ICamera.cpp (d:\source\mysource\android\camera\av\camera):        remote()->transact(DISCONNECT, data, &reply);
+ICamera.cpp (d:\source\mysource\android\camera\av\camera):    virtual status_t connect(const sp<ICameraClient>& cameraClient)
+ICamera.cpp (d:\source\mysource\android\camera\av\camera):        remote()->transact(CONNECT, data, &reply);
+ICamera.cpp (d:\source\mysource\android\camera\av\camera):        case DISCONNECT: {
+ICamera.cpp (d:\source\mysource\android\camera\av\camera):            ALOGV("DISCONNECT");
+ICamera.cpp (d:\source\mysource\android\camera\av\camera):            disconnect();
+ICamera.cpp (d:\source\mysource\android\camera\av\camera):        case CONNECT: {
+ICamera.cpp (d:\source\mysource\android\camera\av\camera):            reply->writeInt32(connect(cameraClient));
+ICameraService.cpp (d:\source\mysource\android\camera\av\camera):    // connect to camera service
+ICameraService.cpp (d:\source\mysource\android\camera\av\camera):    virtual sp<ICamera> connect(const sp<ICameraClient>& cameraClient, int cameraId,
+ICameraService.cpp (d:\source\mysource\android\camera\av\camera):        remote()->transact(BnCameraService::CONNECT, data, &reply);
+ICameraService.cpp (d:\source\mysource\android\camera\av\camera):    // connect to camera service (pro client)
+ICameraService.cpp (d:\source\mysource\android\camera\av\camera):    virtual sp<IProCameraUser> connect(const sp<IProCameraCallbacks>& cameraCb, int cameraId,
+ICameraService.cpp (d:\source\mysource\android\camera\av\camera):        remote()->transact(BnCameraService::CONNECT_PRO, data, &reply);
+ICameraService.cpp (d:\source\mysource\android\camera\av\camera):        case CONNECT: {
+ICameraService.cpp (d:\source\mysource\android\camera\av\camera):            sp<ICamera> camera = connect(cameraClient, cameraId,
+ICameraService.cpp (d:\source\mysource\android\camera\av\camera):        case CONNECT_PRO: {
+ICameraService.cpp (d:\source\mysource\android\camera\av\camera):            sp<IProCameraUser> camera = connect(cameraClient, cameraId,
+IProCameraUser.cpp (d:\source\mysource\android\camera\av\camera):    DISCONNECT = IBinder::FIRST_CALL_TRANSACTION,
+IProCameraUser.cpp (d:\source\mysource\android\camera\av\camera):    CONNECT,
+IProCameraUser.cpp (d:\source\mysource\android\camera\av\camera):    // disconnect from camera service
+IProCameraUser.cpp (d:\source\mysource\android\camera\av\camera):    void disconnect()
+IProCameraUser.cpp (d:\source\mysource\android\camera\av\camera):        ALOGV("disconnect");
+IProCameraUser.cpp (d:\source\mysource\android\camera\av\camera):        remote()->transact(DISCONNECT, data, &reply);
+IProCameraUser.cpp (d:\source\mysource\android\camera\av\camera):    virtual status_t connect(const sp<IProCameraCallbacks>& cameraClient)
+IProCameraUser.cpp (d:\source\mysource\android\camera\av\camera):        remote()->transact(CONNECT, data, &reply);
+IProCameraUser.cpp (d:\source\mysource\android\camera\av\camera):        case DISCONNECT: {
+IProCameraUser.cpp (d:\source\mysource\android\camera\av\camera):            ALOGV("DISCONNECT");
+IProCameraUser.cpp (d:\source\mysource\android\camera\av\camera):            disconnect();
+IProCameraUser.cpp (d:\source\mysource\android\camera\av\camera):        case CONNECT: {
+IProCameraUser.cpp (d:\source\mysource\android\camera\av\camera):            reply->writeInt32(connect(cameraClient));
+ProCamera.cpp (d:\source\mysource\android\camera\av\camera):sp<ProCamera> ProCamera::connect(int cameraId)
+ProCamera.cpp (d:\source\mysource\android\camera\av\camera):    return CameraBaseT::connect(cameraId, String16(),
